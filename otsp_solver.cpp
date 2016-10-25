@@ -146,7 +146,7 @@ void OTSP_Solver::calculate_path()
 std::pair<int, int> OTSP_Solver::getTopRatedPoint(TSP_Table &table)
 {
     double max_rating = 0.0;
-    int r_i, r_j;
+    int r_i = TSP::UNDEFINED, r_j = TSP::UNDEFINED;
 
     for(int i=0; i<pointsNumber; i++)
         for(int j=0; j<pointsNumber; j++)
@@ -167,6 +167,13 @@ std::pair<int, int> OTSP_Solver::getTopRatedPoint(TSP_Table &table)
                         r_i = i;
                         r_j = j;
                     }
+                }
+
+
+                if(r_i==TSP::UNDEFINED)
+                {
+                    r_i = i;
+                    r_j = j;
                 }
             }
         }

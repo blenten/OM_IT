@@ -25,15 +25,19 @@ void MainWindow::on_calc_button_clicked()
         solver.calculate_path();
     }catch(TSP_Exception ex)
     {
-        ui->output_line->setText(ex.what());
+        ui->path_output_line->setText(ex.what());
+        ui->len_output_line->setText(ex.what());
         return;
     }
 
-    QString result = "";
+    QString result;
     std::string path = solver.path_to_string();
-    result += "Path: " + QString::fromUtf8(path.data(), path.size()) + "\tLength: " + QString::number(solver.getPathLength());
 
-    ui->output_line->setText(result);
+    result = QString::fromUtf8(path.data(), path.size());
+    ui->path_output_line->setText(result);
+
+    result = QString::number(solver.getPathLength());
+    ui->len_output_line->setText(result);
 }
 
 
@@ -84,7 +88,7 @@ void MainWindow::on_extend_button_clicked()
 
 void MainWindow::on_cell_dclick(int row, int col)
 {
-    if(row==col && ui->input_table->rowCount()>1)
+    if(row==col && ui->input_table->rowCount()>2)
     {
         ui->input_table->removeRow(row);
         ui->input_table->removeColumn(col);
