@@ -4,8 +4,25 @@
 #include<vector>
 #include<tuple>
 #include<exception>
+#include<sstream>
 
-typedef std::vector<std::vector<double>> TSP_Table;
+typedef std::vector<std::vector<double> > TSP_Table;
+
+namespace  TSP
+{
+    const double M = -1.0;
+    const double UNDEFINED = -2.0;
+}
+
+class TSP_Exception: public std::exception {
+private:
+    std::string message;
+public:
+    explicit TSP_Exception(const std::string& message);
+    virtual const char* what() const throw() {
+        return message.c_str();
+    }
+};
 
 class OTSP_Solver
 {
@@ -16,8 +33,7 @@ public:
 
     double getPathLength();
     std::vector<int> getPath();
-
-    static const double TSP_M = -1.0;
+    std::string path_to_string();
 private:
     TSP_Table reduce_table_vals(TSP_Table &table);
     void reduce_row_vals(TSP_Table &table, int index);
@@ -25,6 +41,7 @@ private:
     void reduce_table(TSP_Table &table, int i, int j);
 
     std::pair<int, int> getTopRatedPoint(TSP_Table &table);
+    double getPointRating(TSP_Table &table, int r, int c);
     void add_to_path(int i, int j);
 
     bool data;
