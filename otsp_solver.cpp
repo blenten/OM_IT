@@ -132,6 +132,8 @@ void OTSP_Solver::calculate_path()
     {
         int i,j;
         std::tie(i, j) = getTopRatedPoint(work_table);
+        if(i==TSP::UNDEFINED || j==TSP::UNDEFINED)
+            throw TSP_Exception("No path.");
         add_to_path(i, j);
         work_table[j][i] = TSP::M;
         reduce_table(work_table, i, j); //pointsNumber--; here
